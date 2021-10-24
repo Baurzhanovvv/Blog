@@ -1,0 +1,1 @@
+Hi! It's just project which i wanna finish for weekends, so i have about 1 day, it's like a challenge. I think only im will be able to read it
