@@ -1,10 +1,12 @@
 from django.shortcuts import render
 
 # Create your views here.
-from djoser import permissions
-from rest_framework import status
+from rest_framework import status, generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+from blog.models import Profile, Category, Post
+from blog.serializers import ProfileSerializer, CategorySerializer, PostSerializer
 
 
 class IsUser(permissions.BasePermission):
@@ -18,3 +20,39 @@ class Logout(APIView):
     def get(self, request, format=None):
         request.user.auth_token.delete()
         return Response(status=status.HTTP_200_OK)
+
+
+class ProfileListView(generics.ListCreateAPIView):
+    serializer_class = ProfileSerializer
+    queryset = Profile.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)
+
+
+class DetailProfileView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ProfileSerializer
+    permission_classes = (IsUser,)
+    queryset = Profile.objects.all()
+
+
+class CategoryListView(generics.ListCreateAPIView):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+
+
+class PostListView(generics.ListAPIView):
+    serializer_class = PostSerializer
+    queryset = Post.objects.filter(draft=False)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+
+class CreatePostView(generics.CreateAPIView):
+    serializer_class = PostSerializer
+    queryset = Post.objects.filter(draft=False)
+    permission_classes = (permissions.IsAdminUser,)
+
+
+class DetailPostView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = PostSerializer
+    queryset = Post.objects.filter(draft=False)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)

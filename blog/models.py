@@ -30,6 +30,7 @@ class Post(models.Model):
     text = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     gallery = models.ForeignKey('gallery.Gallery', on_delete=models.CASCADE)
+    draft = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.pk)
