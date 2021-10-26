@@ -5,8 +5,9 @@ from rest_framework import status, generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from blog.models import Profile, Category, Post
-from blog.serializers import ProfileSerializer, CategorySerializer, PostSerializer
+from blog.models import Profile, Category, Post, Comment
+from blog.serializers import ProfileSerializer, CategorySerializer, PostSerializer, CreatePostSerializer, \
+    CreateCommentSerializer
 
 
 class IsUser(permissions.BasePermission):
@@ -47,7 +48,7 @@ class PostListView(generics.ListAPIView):
 
 
 class CreatePostView(generics.CreateAPIView):
-    serializer_class = PostSerializer
+    serializer_class = CreatePostSerializer
     queryset = Post.objects.filter(draft=False)
     permission_classes = (permissions.IsAdminUser,)
 
@@ -56,3 +57,9 @@ class DetailPostView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PostSerializer
     queryset = Post.objects.filter(draft=False)
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+
+class CreateCommentView(generics.CreateAPIView):
+    serializer_class = CreateCommentSerializer
+    queryset = Comment.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)

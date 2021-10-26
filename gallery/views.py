@@ -4,7 +4,7 @@ from django.shortcuts import render
 from rest_framework import generics, permissions
 
 from gallery.models import Photo, Gallery
-from gallery.serializers import PhotoSerializer, GallerySerializer
+from gallery.serializers import PhotoSerializer, GallerySerializer, CreateGallerySerializer
 
 
 class CreatePhotoListView(generics.ListCreateAPIView):
@@ -26,7 +26,7 @@ class GalleryListView(generics.ListAPIView):
 
 
 class CreateGalleryListView(generics.CreateAPIView):
-    serializer_class = GallerySerializer
+    serializer_class = CreateGallerySerializer
     queryset = Gallery.objects.all()
     permission_classes = (permissions.IsAdminUser,)
 

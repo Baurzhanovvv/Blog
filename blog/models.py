@@ -30,6 +30,7 @@ class Post(models.Model):
     text = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     gallery = models.ForeignKey('gallery.Gallery', on_delete=models.CASCADE)
+    comment = models.ManyToManyField('Comment', blank=True)
     draft = models.BooleanField(default=False)
 
     def __str__(self):
@@ -37,9 +38,9 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    author = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     text = models.TextField()
     date_time = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.author
+        return self.profile

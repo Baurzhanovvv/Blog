@@ -5,7 +5,7 @@ from django.db import models
 
 class Photo(models.Model):
     """ Фото """
-    image = models.ImageField()
+    photo = models.ImageField()
 
     def __str__(self):
         return str(self.pk)
