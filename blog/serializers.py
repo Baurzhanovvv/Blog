@@ -17,7 +17,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    author = ProfileSerializer(read_only=True)
+    profile = ProfileSerializer(read_only=True)
     text = serializers.SlugRelatedField(slug_field='text', read_only=True)
 
     class Meta:

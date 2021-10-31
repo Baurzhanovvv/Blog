@@ -37,10 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'blog',
     'gallery',
+
     'rest_framework',
     'rest_framework_simplejwt',
+
     'djoser',
     'corsheaders'
 ]
@@ -88,7 +91,7 @@ DATABASES = {
 }
 
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:8000",
+    "http://localhost:3000",
     "http://127.0.0.1:8000",
 ]
 

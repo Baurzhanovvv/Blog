@@ -43,8 +43,22 @@ class CategoryListView(generics.ListCreateAPIView):
 
 class PostListView(generics.ListAPIView):
     serializer_class = PostSerializer
-    queryset = Post.objects.filter(draft=False)
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def get_queryset(self):
+        queryset = Post.objects.filter(draft=False)
+        params = self.request.query_params
+
+        category = params.get('category', None)
+        title = params.get('title', None)
+
+        if category:
+            queryset = queryset.filter(category__id=category)
+
+        if title:
+            queryset = queryset.filter(title__icontains=title)
+
+        return queryset
 
 
 class CreatePostView(generics.CreateAPIView):
@@ -54,7 +68,7 @@ class CreatePostView(generics.CreateAPIView):
 
 
 class DetailPostView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = PostSerializer
+    serializer_class = CreatePostSerializer
     queryset = Post.objects.filter(draft=False)
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 

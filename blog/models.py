@@ -34,7 +34,7 @@ class Post(models.Model):
     draft = models.BooleanField(default=False)
 
     def __str__(self):
-        return str(self.pk)
+        return self.title
 
 
 class Comment(models.Model):
@@ -43,4 +43,4 @@ class Comment(models.Model):
     date_time = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.profile
+        return str(self.pk)
