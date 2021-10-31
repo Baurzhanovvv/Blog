@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render
 
 # Create your views here.
@@ -27,6 +28,17 @@ class ProfileListView(generics.ListCreateAPIView):
     serializer_class = ProfileSerializer
     queryset = Profile.objects.all()
     permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        queryset = Profile.objects.all()
+        params = self.request.query_params
+
+        user = params.get('user', None)
+
+        if user:
+            queryset = queryset.filter(user=user)
+
+        return queryset
 
 
 class DetailProfileView(generics.RetrieveUpdateDestroyAPIView):

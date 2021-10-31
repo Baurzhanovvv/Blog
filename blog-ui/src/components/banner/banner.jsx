@@ -2,7 +2,7 @@ import image1 from '../static/img/image1.png'
 import {Field, Form, Formik} from "formik";
 import * as Yup from 'yup'
 
-const Banner = () => {
+const Banner = props => {
     const initialValues = {
         inputText: ''
     }
@@ -10,7 +10,7 @@ const Banner = () => {
         inputText: ''
     })
     const onSubmit = values => {
-        console.log(values)
+        props.getPost(values.inputText, null)
     }
     return (
         <section className="banner">

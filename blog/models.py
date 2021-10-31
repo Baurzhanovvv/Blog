@@ -23,9 +23,7 @@ class Category(models.Model):
 
 class Post(models.Model):
     """ Посты """
-    if User.is_superuser:
-        author = models.ForeignKey(User, on_delete=models.CASCADE)
-
+    author = models.ForeignKey(User, default="admin", on_delete=models.CASCADE)
     title = models.CharField(max_length=120)
     text = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
