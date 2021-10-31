@@ -64,3 +64,12 @@ input#search-bar{
 .posts {
   display: grid;
 }
+
+.formik__button {
+  border: none;
+  width: 0;
+  height: 0;
+  float: right;
+  background-color: #80bdff;
+  cursor: default;
+}

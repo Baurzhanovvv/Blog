@@ -5,9 +5,19 @@ import 'swiper/swiper.scss'; // core Swiper
 import 'swiper/modules/navigation/navigation.scss'; // Navigation module
 import 'swiper/modules/pagination/pagination.scss'; // Pagination module
 import '../static/post.scss'
-
+import {Field, Form, Formik} from "formik";
+import * as Yup from 'yup'
 
 export const Post = () => {
+    const initialValues = {
+        commentText: ''
+    }
+    const validationSchema = Yup.object({
+        commentText: ''
+    })
+    const onSubmit = values => {
+        console.log(values)
+    }
     return (
         <div>
             <div className="container">
@@ -31,9 +41,17 @@ export const Post = () => {
                     Desc
                 </p> <hr/>
                 <h4>Оставить комментарий</h4>
-                <textarea placeholder="Напишите ваш уникальный комментарии" cols={175} rows={15}/><br/>
-                <button className="btn btn-success">Отправить</button>
+                <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+                    {
+                        formik => {
+                            return <Form>
+                                <Field name="commentText" component="textarea" placeholder="Напишите ваш уникальный комментарии" cols={175} rows={15}/>
+                                <br/>
+                                <button type="submit" className="btn btn-success">Отправить</button>
+                            </Form>
+                        }
+                    }
+                </Formik>
             </div>
-        </div>
-    )
+        </div>)
 };

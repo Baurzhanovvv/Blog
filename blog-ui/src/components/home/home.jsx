@@ -1,25 +1,18 @@
-import image1 from '../static/img/image1.png'
 import '../static/home.scss'
 import {NavLink} from "react-router-dom";
+import Banner from "../banner/banner";
+
 
 const Home = () => {
+    const onChange = values => {
+        if (values.target.checked) {
+            console.log(values.target.defaultValue)
+        }
+
+    }
     return (
         <div>
-            <section className="banner">
-                <div className="container">
-                    <div className="banner__title"><p>
-                        ЗДРАСТВУЙ! <br/> Я напишу вам, <br/> обо всем что знаю!
-                    </p>
-                        <input type="text" id="search-bar" placeholder="Найти пост" />
-                            <a href="#">
-                                <img className="search-icon" src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png" />
-                            </a>
-                        </div>
-                    <div className="banner__image">
-                        <img src={image1} alt="Здесь крутая пикча!"/>
-                    </div>
-                </div>
-            </section>
+            <Banner />
             <section className="posts">
                 <div className="container">
                     <h2 style={{ marginTop: '4rem', textAlign: 'center' }}>Лучшие посты!</h2>
@@ -27,7 +20,7 @@ const Home = () => {
                         <div className="col">
                             <div className="categories" style={{float: 'right', marginTop: '6rem'}}>
                                 <h2>Категорий</h2>
-                                <input type="checkbox" name="category"/>
+                                <input type="checkbox" name="category" value="Здоровье" onChange={onChange}/>
                                 <label htmlFor="category" style={{ textIndent: '4px' }}>Здоровье</label>
                             </div>
                         </div>
