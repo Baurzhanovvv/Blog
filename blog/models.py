@@ -7,7 +7,7 @@ from django.db import models
 class Profile(models.Model):
     """ Профиль """
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    liked_post = models.ManyToManyField('Post', related_name="profile_post")
+    liked_post = models.ManyToManyField('Post', related_name="profile_post", blank=True)
 
     def __str__(self):
         return self.user.first_name

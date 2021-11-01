@@ -22,7 +22,7 @@ const SignupForm = (props) => {
     })
     const onSubmit = values => {
         console.log(values);
-        // props.createUser(values)
+        props.createUser(values)
     }
     return (
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
@@ -37,20 +37,8 @@ const SignupForm = (props) => {
                             </div>
                             <hr />
                             <div className="form-floating mb-3">
-                                <Field component="input" type="text" name="first_name" className="form-control" id="floatingPassword" placeholder="First name" />
-                                <label htmlFor="floatingPassword">First name</label>
-                            </div>
-                            <div className="form-floating mb-3">
-                                <Field type="text" name="last_name" className="form-control" id="floatingPasswordConfirm" placeholder="Last name" />
-                                <label htmlFor="floatingPasswordConfirm">Last name</label>
-                            </div>
-                            <div className="form-floating mb-3">
                                 <Field type="email" name="email" className="form-control" id="floatingPasswordConfirm" placeholder="Email" />
                                 <label htmlFor="floatingPasswordConfirm">Email</label>
-                            </div>
-                            <div className="form-floating mb-3">
-                                <Field type="tel" name="phone" className="form-control" id="floatingPasswordConfirm" placeholder="Your mobile phone" />
-                                <label htmlFor="floatingPasswordConfirm">Your mobile phone</label>
                             </div>
                             <div className="form-floating mb-3">
                                 <Field type="password" name="password" className="form-control" id="floatingPasswordConfirm" placeholder="password" />
@@ -81,7 +69,7 @@ const SigninForm = (props) => {
         password: Yup.string().required('Invalid password'),
     })
     const onSubmit = values => {
-        console.log(values)
+        props.logUser(values)
         // props.loginUser(values)
     }
     return (
@@ -118,7 +106,7 @@ const Login = (props) => {
     const location = useLocation()
     return (
         <div>
-            {location.pathname === '/login' ? <SigninForm /> : <SignupForm />}
+            {location.pathname === '/login' ? <SigninForm logUser={props.logUser} /> : <SignupForm createUser={props.createUser} />}
         </div>
     );
 }

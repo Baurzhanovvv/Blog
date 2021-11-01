@@ -29,8 +29,8 @@ const Home = props => {
                                 )}
                             </div>
                         </div>
-                        <div className="col">
                             {props.post.map(p =>
+                            <div className="col">
                                 <div className="card" style={{ width: '18rem', marginTop: '6rem' }}>
                                     <img src={p.gallery.photos[0].photo} className="card-img-top" alt="..." />
                                     <div className="card-body">
@@ -39,8 +39,7 @@ const Home = props => {
                                         <i className="far fa-heart" style={{float: 'right'}}></i>
                                     </div>
                                 </div>
-                            )}
-                        </div>
+                            </div>)}
                     </div>
                 </div>
             </section>

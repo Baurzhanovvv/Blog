@@ -3,7 +3,7 @@ import '../static/header.scss'
 import {NavLink} from "react-router-dom";
 
 
-const Header = () => {
+const Header = props => {
     return (
         <div>
             <div className="header">
@@ -12,7 +12,8 @@ const Header = () => {
                         <nav className="nav">
                             <NavLink to="/" className="nav__link">На главную</NavLink>
                             <NavLink to="/liked-post" className="nav__link">Понравившиеся посты</NavLink>
-                            <NavLink to="login/" className="nav__link">Зарегистрироваться</NavLink>
+                            {props.userData.username ? <NavLink className="nav__link" to="#!">{props.userData.username}</NavLink>
+                                : <NavLink className="nav__link" to="/register">Зарегистрироваться</NavLink>}
                         </nav>
                     </div>
             </div>

@@ -27,7 +27,7 @@ class Logout(APIView):
 class ProfileListView(generics.ListCreateAPIView):
     serializer_class = ProfileSerializer
     queryset = Profile.objects.all()
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.AllowAny,)
 
     def get_queryset(self):
         queryset = Profile.objects.all()
