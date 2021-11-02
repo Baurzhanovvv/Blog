@@ -5,3 +5,11 @@
     margin-right: auto;
   }
 }
+
+#comment {
+  display: block;
+  border: 1px solid silver;
+  & h6, p {
+    margin: 20px 0 20px 20px;
+  }
+}

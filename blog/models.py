@@ -41,4 +41,4 @@ class Comment(models.Model):
     date_time = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str(self.pk)
+        return self.text

@@ -8,6 +8,7 @@ import Liked from "./components/liked/liked";
 import {HomeConnected} from "./components/home/homeContainer";
 import {LoginConnected} from "./components/login/loginContainer";
 import {HeaderConnected} from "./components/header/headerContainer";
+import {PostConnected} from "./components/post/postContainer";
 
 const App = () => {
     return (
@@ -16,7 +17,7 @@ const App = () => {
             <Route exact path='/' render={() => <HomeConnected />}/>
             <Route exact path='/login' render={() => <LoginConnected />}/>
             <Route exact path='/register' render={() => <LoginConnected />}/>
-            <Route exact path='/post/:id?' render={() => <Post />}/>
+            <Route exact path='/post/:id?' render={() => <PostConnected />}/>
             <Route exact path='/liked-post' render={() => <Liked />}/>
         </div>
     );

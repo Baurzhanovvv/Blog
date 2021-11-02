@@ -1,11 +1,13 @@
 import axios from "axios";
 
 const GET_POSTS = 'GET-POSTS';
+const GET_POST = 'GET-POST';
 const GET_CATEGORIES = 'GET-CATEGORIES';
 
 let localState = {
     posts: [],
-    categories: []
+    categories: [],
+    post: [],
 }
 
 const instance = axios.create({
@@ -22,6 +24,12 @@ export const PostReducer = (state = localState, action) => {
                 posts: action.posts
             }
 
+        case GET_POST:
+            return {
+                ...state,
+                post: action.post
+            }
+
         case GET_CATEGORIES:
             return {
                 ...state,
@@ -34,31 +42,26 @@ export const PostReducer = (state = localState, action) => {
 }
 
 
-const getPostAC = data => ({type: GET_POSTS, posts: data})
+const getPostsAC = data => ({type: GET_POSTS, posts: data})
+const getPostAC = data => ({type: GET_POST, post: data})
 const getCategoryAC = data => ({type: GET_CATEGORIES, categories: data})
 
 export const getPostTC = (title, category) => async dispatch => {
     if (category) {
-        let list = [1]
-        list.map(r => {
-            if (category !== r) {
-                list.push(r)
-                list.push(category)
-            }
-        })
-        let a = list.slice(1)
-        a.map(b => {
-            let c = `&`
-        })
         let response = await instance.get(`post/?category=${category}`)
-        return dispatch(getPostAC(response.data))
+        return dispatch(getPostsAC(response.data))
     } else if (title) {
         let response = await instance.get(`post/?title=${title}`)
-        return dispatch(getPostAC(response.data))
+        return dispatch(getPostsAC(response.data))
     } else {
         let response = await instance.get(`post/`)
-        return dispatch(getPostAC(response.data))
+        return dispatch(getPostsAC(response.data))
     }
+}
+
+export const getPostByIdTC = id => async dispatch => {
+    let response = await instance.get(`post/${id}/`)
+    return dispatch(getPostAC(response.data))
 }
 
 export const getCategoryTC = () => async dispatch => {
@@ -66,3 +69,56 @@ export const getCategoryTC = () => async dispatch => {
     return dispatch(getCategoryAC(response.data))
 }
 
+export const createCommentTC = (text, profile, token, id, post) => async dispatch => {
+    let postData = {
+        "text": text,
+        "profile": profile
+    }
+    let headers = {'Authorization': `Bearer ${token}`}
+    let response =
+        await axios.post('http://127.0.0.1:8000/api/comment/create/',
+        postData,
+        {headers: headers}
+        )
+    setTimeout(async() => {
+        if (post.length === 0) {
+            let data = {
+                "comment": [response.data.id]
+            }
+            let patchResponse =
+                await axios.patch(`http://127.0.0.1:8000/api/post/${id}/update`,
+                    data,
+                    {headers: headers}
+                )
+            setTimeout(async () => {
+                let rps = await instance.get(`post/${id}/`)
+                return dispatch(getPostAC(rps.data))
+            })
+        } else {
+            let dt = {
+                "comment": []
+            }
+            post.map(p => {
+                let d = []
+                let data = {
+                    "comment": []
+                }
+                d.unshift(p.id, response.data.id)
+                data.comment.unshift(d)
+                // d.map(d => {
+                //     dt = d
+                // })
+                return dt.comment = data.comment[0]
+            })
+            let patchResponse =
+                await axios.patch(`http://127.0.0.1:8000/api/post/${id}/update`,
+                    dt,
+                    {headers: headers}
+                )
+            setTimeout(async () => {
+                let rps = await instance.get(`post/${id}/`)
+                return dispatch(getPostAC(rps.data))
+            })
+        }
+    }, 200)
+}

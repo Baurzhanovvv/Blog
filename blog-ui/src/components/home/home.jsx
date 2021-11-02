@@ -29,13 +29,13 @@ const Home = props => {
                                 )}
                             </div>
                         </div>
-                            {props.post.map(p =>
+                            {props.posts.map(p =>
                             <div className="col">
                                 <div className="card" style={{ width: '18rem', marginTop: '6rem' }}>
                                     <img src={p.gallery.photos[0].photo} className="card-img-top" alt="..." />
                                     <div className="card-body">
                                         <h5 className="card-title">{p.title}</h5>
-                                        <NavLink to={`post/${p.id}`} className="btn btn-primary">Подробнее</NavLink>
+                                        <NavLink to={`post/${p.id}`} onClick={() => props.getPostById(p.id)} className="btn btn-primary">Подробнее</NavLink>
                                         <i className="far fa-heart" style={{float: 'right'}}></i>
                                     </div>
                                 </div>

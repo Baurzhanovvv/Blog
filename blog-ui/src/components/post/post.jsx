@@ -7,8 +7,11 @@ import 'swiper/modules/pagination/pagination.scss'; // Pagination module
 import '../static/post.scss'
 import {Field, Form, Formik} from "formik";
 import * as Yup from 'yup'
+import 'reactjs-popup/dist/index.css';
+import Popup from "reactjs-popup";
 
-export const Post = () => {
+export const Post = props => {
+    let posts = props.post.gallery.photos
     const initialValues = {
         commentText: ''
     }
@@ -16,12 +19,12 @@ export const Post = () => {
         commentText: ''
     })
     const onSubmit = values => {
-        console.log(values)
+        props.postComment(values.commentText, props.auth.data.id, props.auth.token, props.post.id, props.post.comment)
     }
     return (
         <div>
             <div className="container">
-                <h2 style={{textAlign: 'center', paddingTop: '2rem', marginBottom: '4rem'}}>Title</h2>
+                <h2 style={{textAlign: 'center', paddingTop: '2rem', marginBottom: '4rem'}}>{props.post.title}</h2>
                 <Swiper
                     className="swiper"
                     modules={[Navigation, Pagination ]}
@@ -29,17 +32,16 @@ export const Post = () => {
                     slidesPerView={1}
                     navigation
                     pagination={{ clickable: true }}
-                    // onSwiper={(swiper) => console.log(swiper)}
-                    // onSlideChange={() => console.log('slide change')}
                 >
-                    <SwiperSlide><img src="https://via.placeholder.com/350x350" className="swiper__image" alt=""/></SwiperSlide>
-                    <SwiperSlide><img src="https://via.placeholder.com/450x350" className="swiper__image" alt=""/></SwiperSlide>
-                    <SwiperSlide><img src="https://via.placeholder.com/550x350" className="swiper__image" alt=""/></SwiperSlide>
-                    <SwiperSlide><img src="https://via.placeholder.com/150x350" className="swiper__image" alt=""/></SwiperSlide>
+                    {posts.map(p =>
+                        <SwiperSlide>
+                            <img src={p.photo} className="swiper__image" alt=""/>
+                        </SwiperSlide>
+                    )}
                 </Swiper><hr/>
                 <p>
-                    Desc
-                </p> <hr/>
+                    {props.post.text}
+                </p><hr/>
                 <h4>Оставить комментарий</h4>
                 <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
                     {
@@ -47,11 +49,30 @@ export const Post = () => {
                             return <Form>
                                 <Field name="commentText" component="textarea" placeholder="Напишите ваш уникальный комментарии" cols={175} rows={15}/>
                                 <br/>
-                                <button type="submit" className="btn btn-success">Отправить</button>
+                                {props.auth.data.length === 0 ?
+                                <Popup
+                                    trigger={<button type="submit" className="btn btn-success">Отправить</button>}
+                                    position={"top center"}
+                                >
+                                    <div>ЗАРЕГИСТРИРОВАТЬСЯ</div>
+                                </Popup>
+                                    :
+                                    <button type="submit" className="btn btn-success">Отправить</button>}
                             </Form>
                         }
                     }
                 </Formik>
+                <h3>
+                    Комменты ({props.post.comment.length})
+                </h3>
+                {props.post.comment.map(r =>
+                    <div>
+                        <div className="mt-4" id="comment">
+                            <h6>{r.profile.id}</h6>
+                            <p>{r.text}</p>
+                        </div><br/>
+                    </div>
+                    )}
             </div>
         </div>)
 };

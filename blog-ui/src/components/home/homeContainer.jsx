@@ -1,6 +1,6 @@
 import Home from "./home";
 import {connect} from "react-redux";
-import {getCategoryTC, getPostTC} from "../../store/reducers/postReducer";
+import {getCategoryTC, getPostByIdTC, getPostTC} from "../../store/reducers/postReducer";
 import {useEffect} from "react";
 
 const HomeContainer = props => {
@@ -10,14 +10,14 @@ const HomeContainer = props => {
     }, [])
     return (
         <div>
-            <Home category={props.category} post={props.post} getPost={props.getPostTC} />
+            <Home category={props.category} posts={props.posts} getPost={props.getPostTC} getPostById={props.getPostByIdTC} />
         </div>
     )
 }
 
 let mapStateToProps = state => ({
-    post: state.post.posts,
+    posts: state.post.posts,
     category: state.post.categories,
 })
 
-export const HomeConnected = connect(mapStateToProps, {getPostTC, getCategoryTC})(HomeContainer)
+export const HomeConnected = connect(mapStateToProps, {getPostTC, getCategoryTC, getPostByIdTC})(HomeContainer)

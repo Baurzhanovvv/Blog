@@ -30,7 +30,7 @@ const SignupForm = (props) => {
                 formik => {
                     return <Form>
                         <div className="card-body p-4 p-sm-5">
-                            <h5 className="card-title text-center mb-5 fw-light fs-5">Login</h5>
+                            <h5 className="card-title text-center mb-5 fw-light fs-5">Register</h5>
                             <div className="form-floating mb-3">
                                 <Field component="input" type="text" name="username" className="form-control" id="floatingInputUsername" placeholder="Username" required autoFocus />
                                 <label htmlFor="floatingInputUsername">Username</label>

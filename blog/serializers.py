@@ -18,7 +18,6 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer(read_only=True)
-    text = serializers.SlugRelatedField(slug_field='text', read_only=True)
 
     class Meta:
         model = Comment
@@ -28,7 +27,7 @@ class CommentSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     category = CategorySerializer()
     gallery = GallerySerializer()
-    comment = CommentSerializer()
+    comment = CommentSerializer(read_only=True, many=True)
 
     class Meta:
         model = Post

@@ -12,8 +12,13 @@ const Header = props => {
                         <nav className="nav">
                             <NavLink to="/" className="nav__link">На главную</NavLink>
                             <NavLink to="/liked-post" className="nav__link">Понравившиеся посты</NavLink>
-                            {props.userData.username ? <NavLink className="nav__link" to="#!">{props.userData.username}</NavLink>
-                                : <NavLink className="nav__link" to="/register">Зарегистрироваться</NavLink>}
+                            {props.userData.username || props.authData.username ?
+                                <NavLink className="nav__link" to="#!">
+                                    {props.userData.username  || props.authData.username}
+                            </NavLink> :
+                                <NavLink className="nav__link" to="/register">
+                                    Зарегистрироваться
+                                </NavLink>}
                         </nav>
                     </div>
             </div>

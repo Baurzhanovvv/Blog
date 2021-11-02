@@ -1,11 +1,13 @@
 import axios from "axios";
 
-const CREATE_USER = 'CREATE_USER';
-const LOG_USER = 'LOG_USER';
+const CREATE_USER = 'CREATE-USER';
+const LOG_USER = 'LOG-USER';
+const SET_TOKEN = 'SET-TOKEN';
 
 const localState = {
     data: [],
-    userData: []
+    userData: [],
+    token: []
 }
 
 const instance = axios.create({
@@ -28,12 +30,19 @@ export const AuthReducer = (state = localState, action) => {
                 data: action.data,
             }
 
+        case SET_TOKEN:
+            return {
+                ...state,
+                token: action.data,
+            }
+
         default:
             return state
     }
 }
 
 const createUserAC = data => ({type: CREATE_USER, data: data});
+const setTokenAC = data => ({type: SET_TOKEN, data: data});
 const logUserAC = (data, userData) => ({type: LOG_USER, userData: userData, data: data});
 
 export const createUserTC = data => async dispatch => {
@@ -48,7 +57,7 @@ export const createUserTC = data => async dispatch => {
 
 export const logUserTC = data => async dispatch => {
     let response = await instance.post('auth/token/', data)
-    console.log(response.data)
+    dispatch(setTokenAC(response.data.access))
     setTimeout(async () => {
         let headers = {'Authorization': `Bearer ${response.data.access}`}
         let getToken = await axios.get('http://127.0.0.1:8000/api/auth/users/me/', {headers: headers})

@@ -80,6 +80,12 @@ class CreatePostView(generics.CreateAPIView):
 
 
 class DetailPostView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = PostSerializer
+    queryset = Post.objects.filter(draft=False)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+
+class UpdatePostView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CreatePostSerializer
     queryset = Post.objects.filter(draft=False)
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
