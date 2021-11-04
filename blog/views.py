@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 
 from blog.models import Profile, Category, Post, Comment
 from blog.serializers import ProfileSerializer, CategorySerializer, PostSerializer, CreatePostSerializer, \
-    CreateCommentSerializer
+    CreateCommentSerializer, CreateProfileSerializer
 
 
 class IsUser(permissions.BasePermission):
@@ -25,7 +25,7 @@ class Logout(APIView):
 
 
 class ProfileListView(generics.ListCreateAPIView):
-    serializer_class = ProfileSerializer
+    serializer_class = CreateProfileSerializer
     queryset = Profile.objects.all()
     permission_classes = (permissions.AllowAny,)
 
@@ -39,6 +39,12 @@ class ProfileListView(generics.ListCreateAPIView):
             queryset = queryset.filter(user=user)
 
         return queryset
+
+
+class UpdateProfileView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = CreateProfileSerializer
+    permission_classes = (IsUser,)
+    queryset = Profile.objects.all()
 
 
 class DetailProfileView(generics.RetrieveUpdateDestroyAPIView):

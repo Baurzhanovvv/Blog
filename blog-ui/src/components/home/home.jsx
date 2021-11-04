@@ -35,8 +35,16 @@ const Home = props => {
                                     <img src={p.gallery.photos[0].photo} className="card-img-top" alt="..." />
                                     <div className="card-body">
                                         <h5 className="card-title">{p.title}</h5>
-                                        <NavLink to={`post/${p.id}`} onClick={() => props.getPostById(p.id)} className="btn btn-primary">Подробнее</NavLink>
-                                        <i className="far fa-heart" style={{float: 'right'}}></i>
+                                        <NavLink to={`post/${p.id}`} onClick={() => props.getPostById(p.id)}
+                                                 className="btn btn-primary">Подробнее</NavLink>
+                                        <i
+                                            onClick={() =>
+                                                props.likePost(
+                                                    p.id,
+                                                    props.auth,
+                                                    props.token,
+                                                )}
+                                            className="far fa-heart" style={{float: 'right'}}></i>
                                     </div>
                                 </div>
                             </div>)}

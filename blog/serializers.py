@@ -4,7 +4,7 @@ from blog.models import Profile, Category, Post, Comment
 from gallery.serializers import GallerySerializer
 
 
-class ProfileSerializer(serializers.ModelSerializer):
+class CreateProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = '__all__'
@@ -17,7 +17,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    profile = ProfileSerializer(read_only=True)
+    profile = CreateProfileSerializer(read_only=True)
 
     class Meta:
         model = Comment
@@ -43,4 +43,12 @@ class CreatePostSerializer(serializers.ModelSerializer):
 class CreateCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
+        fields = '__all__'
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    liked_post = PostSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Profile
         fields = '__all__'

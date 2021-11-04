@@ -10,7 +10,11 @@ const PostContainer = props => {
     }
     return (
         <div>
-            {props.post.length === 0 ? getPost() : <Post post={props.post} auth={props.auth} postComment={props.createCommentTC}/>}
+            {props.post.length === 0 ? getPost() :
+                <Post post={props.post}
+                      auth={props.auth}
+                      postComment={props.createCommentTC}
+                />}
         </div>
     )
 }
@@ -20,4 +24,5 @@ let mapStateToProps = state => ({
     auth: state.auth
 })
 
-export const PostConnected = connect(mapStateToProps, {getPostByIdTC, createCommentTC})(PostContainer)
+export const PostConnected = connect(mapStateToProps,
+    {getPostByIdTC, createCommentTC})(PostContainer)
